@@ -13,45 +13,41 @@ class Developer {
   workOnProject() {}
 }
 
-//Front-End Developer START .. SIRP INHERITANCE
+//Front-End Developer START - SIRP LSP ISP INHERITANCE COMPOSITION
 class FrontEndDeveloper extends Developer {
   constructor(name, style) {
     super(name);
-    this.style = style;
+    this.style = style; //style is a composition
   }
 
   //POLYMORPHISM
   createPlan() {
-    console.log("Create Front-end Developer plan");
+    console.log(`${this.name} is creating Front-end Developer plan`);
   }
 
-  //Creating Abstraction for workOnProject
+  //Creating ISP Abstraction for workOnProject
   workOnProject() {
     this.createHTML();
     this.createStyle();
     this.createJavascript();
-    this.createAnimation();
   }
 
   //-----------------------------------------------------
   createHTML() {
-    console.log("Create HTML");
+    console.log(`${this.name} is creating HTML`);
   }
   //DIP ABSTRACTION
   createStyle(style) {
-    this.style.applyStyle(); //Applying style with Custom CSS or Bootstrap modules
+    this.style.applyStyle(); //Applying style with Custom CSS or Bootstrap modules - composition
   }
   createJavascript() {
-    console.log("Create Javascript Functionality");
-  }
-  createAnimation() {
-    console.log("Create Animation");
+    console.log(`${this.name} is creating Javascript Functionality`);
   }
 }
 //---------------------------------------------------------
 
 //DIP ABSTRACTION
-//Modules for applying style
+//Modules for applying style - composition
 class CustomCSS {
   applyStyle() {
     console.log("Using Custom CSS");
@@ -66,7 +62,19 @@ class Bootstrap {
 
 //Front-End Developer END
 
-//Back-End Developer START .. SIRP INHERITANCE
+//Front-End Developer Senior START - OCP
+class FrontEndDeveloperSenior extends FrontEndDeveloper {
+  constructor(name) {
+    super(name);
+  }
+  createAnimation() {
+    console.log(`${this.name} is creating Animation`);
+  }
+}
+
+//Front-End Developer Senior END
+
+//Back-End Developer START - SIRP LSP INHERITANCE
 
 class BackEndDeveloper extends Developer {
   constructor(name) {
@@ -75,39 +83,40 @@ class BackEndDeveloper extends Developer {
 
   //POLYMORPHISM
   createPlan() {
-    console.log("Create Back-end Developer plan");
+    console.log(`${this.name} is creating Back-end Developer plan`);
   }
   createDb() {
-    console.log("Create Database");
+    console.log(`${this.name} is creating Database`);
   }
   createServer() {
-    console.log("Create Server");
+    console.log(`${this.name} is creating Server`);
   }
   createAPI() {
-    console.log("Create API");
+    console.log(`${this.name} is creating API`);
   }
 }
 
 //Back-End Developer END
 
-//Designer START
+//Designer START SIRP
 class Designer {
   constructor(name) {
     this.name = name;
   }
   createDesign() {
-    console.log("Create Design mockups");
+    console.log(`${this.name} is creating Design mockups`);
   }
 }
 
 //Designer END
 
-//Project START
+//Project START - SIRP
 class Project {
   constructor(name) {
     this.name = name;
     this.projectManager = null;
     this.frontEndDeveloper = null;
+    this.frontEndDeveloperSenior = null;
     this.backEndDeveloper = null;
     this.designer = null;
   }
@@ -120,6 +129,10 @@ class Project {
     this.frontEndDeveloper = frontEndDeveloper;
   }
 
+  addFrontEndDeveloperSenior(frontEndDeveloperSenior) {
+    this.frontEndDeveloperSenior = frontEndDeveloperSenior;
+  }
+
   addBackEndDeveloper(backEndDeveloper) {
     this.backEndDeveloper = backEndDeveloper;
   }
@@ -130,23 +143,33 @@ class Project {
 
   buildProject() {
     console.log(`Start Building Project ${this.name}\n`);
+
+    this.projectManager.manageProject(this);
+    this.projectManager.createProject(this);
+    this.projectManager.createProjectPlan(this);
+    this.projectManager.createProjectBudget(this);
+
     this.frontEndDeveloper.createPlan();
     this.frontEndDeveloper.workOnProject();
+
+    this.frontEndDeveloperSenior.createAnimation();
+
     this.backEndDeveloper.createDb();
     this.backEndDeveloper.createServer();
     this.backEndDeveloper.createAPI();
+
     this.designer.createDesign();
-    this.projectManager.manageProject();
-    this.projectManager.createProject();
-    this.projectManager.createProjectPlan();
-    this.projectManager.createProjectBudget();
-    console.log(` Project ${this.name} Development Completed\n\n`);
+
+    console.log(`Project ${this.name} Development Completed\n\n`);
   }
 
   generateProjectReport() {
-    console.log(`Project Report: ${this.name}`);
+    console.log(`--- Project Report: ${this.name} ---`);
     console.log(`Project Manager: ${this.projectManager.name}`);
     console.log(`Front-End Developer: ${this.frontEndDeveloper.name}`);
+    console.log(
+      `Front-End Developer Senior: ${this.frontEndDeveloperSenior.name}`
+    );
     console.log(`Back-End Developer: ${this.backEndDeveloper.name}`);
     console.log(`Designer: ${this.designer.name}`);
     console.log(`--- End of Report ---\n`);
@@ -160,20 +183,25 @@ class Project {
 //ADVANCED REQUIREMENTS - START
 //Project Manager START
 class ProjectManager {
-  constructor(name) {
+  constructor(name, budget) {
     this.name = name;
+    this.budget = budget;
   }
   manageProject(project) {
-    console.log(`Managing Project ${project.name}`);
+    console.log(`${this.name} is managing Project ${project.name}`);
   }
   createProject(project) {
-    console.log(`Creating Project ${project.name}`);
+    console.log(`${this.name} is creating Project ${project.name}`);
   }
   createProjectPlan(project) {
-    console.log(`Creating Project Plan for Project ${project.name}`);
+    console.log(
+      `${this.name} is creating Project Plan for Project ${project.name}`
+    );
   }
   createProjectBudget(project) {
-    console.log(`Creating Project Budget for Project ${project.name}`);
+    console.log(
+      `${this.name} creating Project Budget for Project ${project.name}`
+    );
   }
 }
 
@@ -186,7 +214,6 @@ class TeamLeader {
   manageTeam(team) {}
   assignTask(team) {}
   assignProject(team) {}
-  assignBudget(team) {}
 }
 
 //Software Tester START
@@ -239,14 +266,31 @@ console.log("--- Debugging, Testing and Usage ---");
 console.log(`\n\n`);
 
 //Creating Team 1
-const projectManager1 = new ProjectManager("John");
-const frontEndDeveloper1 = new FrontEndDeveloper("Alice", new CustomCSS());
-const backEndDeveloper1 = new BackEndDeveloper("Bob");
-const designer1 = new Designer("Eva");
+
 const project1 = new Project("E-Commerce Website");
+
+//Project Manager
+const projectManager1 = new ProjectManager("John", 100000);
+projectManager1.manageProject(project1);
+projectManager1.createProject(project1);
+projectManager1.createProjectPlan(project1);
+projectManager1.createProjectBudget(project1);
+
+//Front-End Developer
+const frontEndDeveloper1 = new FrontEndDeveloper("Alice", new CustomCSS());
+
+//Front-End Developer Senior
+const frontEndDeveloperSenior1 = new FrontEndDeveloperSenior("Belinda");
+
+//Back-End Developer
+const backEndDeveloper1 = new BackEndDeveloper("Bob");
+
+//Designer
+const designer1 = new Designer("Eva");
 
 console.log(projectManager1);
 console.log(frontEndDeveloper1);
+console.log(frontEndDeveloperSenior1);
 console.log(backEndDeveloper1);
 console.log(designer1);
 console.log(project1);
@@ -255,7 +299,9 @@ project1.addProjectManager(projectManager1);
 project1.addFrontEndDeveloper(frontEndDeveloper1);
 project1.addBackEndDeveloper(backEndDeveloper1);
 project1.addDesigner(designer1);
+project1.addFrontEndDeveloperSenior(frontEndDeveloperSenior1);
+console.log(`\n\n`);
+project1.generateProjectReport();
 console.log(`\n\n`);
 project1.buildProject();
-project1.generateProjectReport();
 console.log(`\n\n`);
