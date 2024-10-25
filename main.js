@@ -3,7 +3,8 @@
 
 //MAIN REQUIREMENTS - START
 class Developer {
-  createPrototype() {}
+  createPlan() {}
+  workOnProject() {}
 }
 
 //Front-End Developer START
@@ -22,7 +23,6 @@ class BackEndDeveloper extends Developer {
   createDb() {}
   createServer() {}
   createAPI() {}
-  manageSecurity() {}
 }
 
 //Back-End Developer END
@@ -47,13 +47,19 @@ class Project {
 //Project Manager START
 class ProjectManager {
   manageProject(project) {}
-  assignTeam(project) {}
   createProject(project) {}
   createProjectPlan(project) {}
   createProjectBudget(project) {}
 }
 
 //Project Manager END
+
+class TeamLeader {
+  manageTeam(team) {}
+  assignTask(team) {}
+  assignProject(team) {}
+  assignBudget(team) {}
+}
 
 //Software Tester START
 class SoftwareTester {
@@ -62,20 +68,10 @@ class SoftwareTester {
 
 //Software Tester END
 
-//DevOps START
-class DevOps {
-  deployProject(project) {}
-  monitorProject(project) {}
-}
-//DevOps END
-
 //Business Analyst START
 class BusinessAnalyst {
   analyzeProject(project) {}
   createRequirement(project) {}
   createUserStory(project) {}
-  createBusinessProcess(project) {}
-  createBusinessCase(project) {}
-  createBusinessModel(project) {}
 }
 //Business Analyst END
