@@ -7,6 +7,10 @@ class Developer {
     this.name = name;
   }
 
+  //creating a blueprint that subclasses can use
+  createHTML() {}
+  createDb() {}
+
   createPlan() {
     console.log("Create developer plan");
   }
@@ -33,6 +37,7 @@ class FrontEndDeveloper extends Developer {
   }
 
   //-----------------------------------------------------
+  //ISP
   createHTML() {
     console.log(`${this.name} is creating HTML`);
   }
@@ -64,8 +69,8 @@ class Bootstrap {
 
 //Front-End Developer Senior START - OCP
 class FrontEndDeveloperSenior extends FrontEndDeveloper {
-  constructor(name) {
-    super(name);
+  constructor(name, style) {
+    super(name, style);
   }
   createAnimation() {
     console.log(`${this.name} is creating Animation`);
@@ -85,6 +90,8 @@ class BackEndDeveloper extends Developer {
   createPlan() {
     console.log(`${this.name} is creating Back-end Developer plan`);
   }
+
+  //ISP
   createDb() {
     console.log(`${this.name} is creating Database`);
   }
@@ -94,11 +101,18 @@ class BackEndDeveloper extends Developer {
   createAPI() {
     console.log(`${this.name} is creating API`);
   }
+
+  //Creating ISP Abstraction for workOnProject
+  workOnProject() {
+    this.createDb();
+    this.createServer();
+    this.createAPI();
+  }
 }
 
 //Back-End Developer END
 
-//Designer START SIRP
+//Designer START SIRP ISP
 class Designer {
   constructor(name) {
     this.name = name;
@@ -141,19 +155,23 @@ class Project {
     this.designer = designer;
   }
 
+  //Abstraction
   buildProject() {
     console.log(`Start Building Project ${this.name}\n`);
 
+    //Detail
     this.projectManager.manageProject(this);
     this.projectManager.createProject(this);
     this.projectManager.createProjectPlan(this);
     this.projectManager.createProjectBudget(this);
 
     this.frontEndDeveloper.createPlan();
+    //Abstraction
     this.frontEndDeveloper.workOnProject();
 
     this.frontEndDeveloperSenior.createAnimation();
 
+    //Detail
     this.backEndDeveloper.createDb();
     this.backEndDeveloper.createServer();
     this.backEndDeveloper.createAPI();
@@ -294,6 +312,15 @@ console.log(frontEndDeveloperSenior1);
 console.log(backEndDeveloper1);
 console.log(designer1);
 console.log(project1);
+function testDeveloper(developer) {
+  console.log(`Testing functionality for Developer: ${developer.name}`);
+  developer.createPlan();
+  developer.workOnProject();
+  console.log(`\n\n`);
+}
+
+testDeveloper(frontEndDeveloper1);
+testDeveloper(backEndDeveloper1);
 
 project1.addProjectManager(projectManager1);
 project1.addFrontEndDeveloper(frontEndDeveloper1);

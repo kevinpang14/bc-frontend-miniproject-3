@@ -13,7 +13,7 @@ SOLID
    In this example, FrontEndDeveloper class is open for extension by adding new features, but it is closed for modification, so creating new class for new features is preferred, by creating FrontEndDeveloperSenior class
 
 3. Liskov Substitution Principle (LSP)
-   Subtypes must be substitutable for their base types.
+   Subtypes must be substitutable for their base types without altering the function of the program.
 
    In this example, FrontEndDeveloper class is a subtype of Developer class, so it can be substituted for the base class.
 
