@@ -17,7 +17,7 @@ class Developer {
   workOnProject() {}
 }
 
-//Front-End Developer START - SIRP LSP ISP INHERITANCE COMPOSITION
+//Front-End Developer START - SIRP OCP LSP ISP DIP INHERITANCE COMPOSITION
 class FrontEndDeveloper extends Developer {
   constructor(name, style) {
     super(name);
